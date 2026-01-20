@@ -1,0 +1,14 @@
+name: Build
+on: [push]
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ArtemBernatskyy/buildozer-action@v1
+        with:
+          workdir: .
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-app
+          path: bin/*.apk
