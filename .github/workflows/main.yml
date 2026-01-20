@@ -5,18 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
-      - name: Install buildozer
-        run: |
-          pip install --user --upgrade buildozer
-          pip install --user --upgrade Cython==0.29.33
       - name: Build with Buildozer
-        run: buildozer android debug
+        uses: Peter-Scharfe/buildozer-action@v2
+        with:
+          buildozer_version: master
+          workdir: .
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          name: Hacker-App
+          name: App-Package
           path: bin/*.apk
