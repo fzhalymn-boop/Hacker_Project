@@ -1,16 +1,22 @@
-name: Build
-on: [push]
+name: Build APK
+on: push
 jobs:
-  apk:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build with Buildozer
-        uses: FarasAtwi/buildozer-action@v1
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          workdir: .
+          python-version: '3.8'
+      - name: Install buildozer
+        run: |
+          pip install --user --upgrade buildozer
+          pip install --user --upgrade Cython==0.29.33
+      - name: Build with Buildozer
+        run: buildozer android debug
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          name: HackerApp
+          name: Hacker-App
           path: bin/*.apk
