@@ -5,11 +5,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build with Buildozer
-        uses: Peter-Scharfe/buildozer-action@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          buildozer_version: master
-          workdir: .
+          python-version: '3.9'
+      - name: Install Buildozer
+        run: |
+          pip install --user --upgrade buildozer
+          pip install --user --upgrade Cython==0.29.33
+      - name: Build with Buildozer
+        run: yes | buildozer android debug
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
