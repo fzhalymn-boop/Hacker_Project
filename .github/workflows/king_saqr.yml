@@ -1,0 +1,20 @@
+name: KING SAQR BUILDER
+on: push
+jobs:
+  build_apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install --user --upgrade buildozer cython
+      - name: Build Hacker App
+        run: |
+          yes | /home/runner/.local/bin/buildozer android debug
+      - name: Save APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: KING-SAQR-APP
+          path: bin/*.apk
